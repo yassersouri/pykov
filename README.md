@@ -2,6 +2,11 @@
 
 Here I try to implement inference algorithms (evaluation and decoding) in python for Hidden Markov Models. These algorithms are fairly easy dynamic programming ones. Maybe later I get to implement the learning part.
 
+##Dependencies
+
+* python 2.7.*
+* numpy >= 1.8.0
+
 ##TODO
 
 * Implement evaluation using Forward-Backward algorithm.
