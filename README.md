@@ -18,4 +18,4 @@ Here I try to implement inference algorithms (evaluation and decoding) in python
 * Implement some actually useful demos like POS tagging.
 
 ##Reference
-You can read more about HMM algorithms in many references including [wikipedia](http://en.wikipedia.org/wiki/Hidden_Markov_model), [Paper by Rabiner](http://www.cs.ubc.ca/~murphyk/Bayes/rabiner.pdf) or Chapter 17 of [Murphy's Book](http://www.cs.ubc.ca/~murphyk/MLbook/).
+You can read more about HMM algorithms in many references including [Wikipedia](http://en.wikipedia.org/wiki/Hidden_Markov_model), [paper by Rabiner](http://www.cs.ubc.ca/~murphyk/Bayes/rabiner.pdf) or chapter 17 of [Murphy's Book](http://www.cs.ubc.ca/~murphyk/MLbook/).
