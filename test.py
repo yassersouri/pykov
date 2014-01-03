@@ -1,5 +1,5 @@
 import numpy
-from pykov import markov, evaluation
+from pykov import markov, evaluation, decoding
 
 
 def main():
@@ -20,7 +20,8 @@ def main():
 
     model = markov.HMM(pi, A, B)
     # print evaluation.evaluate(O, model)
-    print evaluation.evaluate(O, model, Q)
+    # print evaluation.evaluate(O, model, Q)
+    print decoding.viterbi(O, model)
 
 
 if __name__ == '__main__':
