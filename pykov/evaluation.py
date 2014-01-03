@@ -6,10 +6,10 @@ def evaluate(observation, model, states=None):
     If you want the real evaluation (you don't know the states) do not set the states.
     Implements the forward algorithm for evaluation of an observation sequence given the HMM model.
     """
-    if states is None:
-        N = model.N
-        T = observation.shape[0]
+    N = model.N
+    T = observation.shape[0]
 
+    if states is None:
         alphas = numpy.zeros((T,N))
         
         """ Initialization """
@@ -24,4 +24,8 @@ def evaluate(observation, model, states=None):
         return alphas[T-1, :].sum()
 
     else:
-        pass
+        #check number of states for compatibility
+        result = 1
+        for i in range(T):
+            result *= model.B[states[i], observation[i]]
+        return result
