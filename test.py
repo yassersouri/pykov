@@ -19,9 +19,9 @@ def main():
     Q = numpy.array([1, 1, 2, 2, 1])
 
     model = markov.HMM(pi, A, B)
-    # print evaluation.evaluate(O, model)
-    # print evaluation.evaluate(O, model, Q)
-    print decoding.viterbi(O, model)
+    print 'Eval', evaluation.evaluate(O, model)
+    print 'Eval with state', evaluation.evaluate(O, model, Q)
+    print 'Decode', decoding.viterbi(O, model)
 
 
 if __name__ == '__main__':
