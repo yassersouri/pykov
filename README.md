@@ -9,8 +9,9 @@ Here I try to implement inference algorithms (evaluation and decoding) in python
 
 ##TODO
 
-* Implement evaluation using Forward-Backward algorithm.
-* Implement decoding using Viterbi algotithm.
+* ~~Implement evaluation using Forward algorithm.~~
+* ~~Implement decoding using Viterbi algotithm.~~
+* Test the implementations.
 * Covert to a python package.
 * Create some documentation.
 * Put the package on pypi.
