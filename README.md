@@ -11,6 +11,7 @@ Here I try to implement inference algorithms (evaluation and decoding) in python
 
 * ~~Implement evaluation using Forward algorithm.~~
 * ~~Implement decoding using Viterbi algotithm.~~
+* Implement the algorithms using the logarithm scal to make it possible to calculate very large or very small numbers.
 * Test the implementations.
 * Covert to a python package.
 * Create some documentation.
