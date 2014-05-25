@@ -1,6 +1,6 @@
 #pykov - python implementation of inference in HMM [Under development]
 
-Here I try to implement inference algorithms (evaluation and decoding) in python for Hidden Markov Models. These algorithms are fairly easy dynamic programming ones. Maybe later I get to implement the learning part.
+Here I try to implement inference (evaluation and decoding) and learning  algorithms in python for Hidden Markov Models. These algorithms are fairly easy dynamic programming ones.
 
 ##Dependencies
 
@@ -11,12 +11,12 @@ Here I try to implement inference algorithms (evaluation and decoding) in python
 
 * ~~Implement evaluation using Forward algorithm.~~
 * ~~Implement decoding using Viterbi algotithm.~~
-* Implement the algorithms using the logarithm scal to make it possible to calculate very large or very small numbers.
+* Implement the algorithms using the logarithm scale to make it possible to calculate very large or very small numbers.
+* Implement learning.
 * Test the implementations.
 * Covert to a python package.
 * Create some documentation.
 * Put the package on pypi.
-* Implement learning.
 * Implement some actually useful demos like POS tagging.
 
 ##Reference
