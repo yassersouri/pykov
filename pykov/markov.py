@@ -18,7 +18,7 @@ class HMM(object):
         self.N = A.shape[0]
         self.check_model()
 
-    def check_model(self):
+    def check_model(self): #FIXME
         """
         Checks the model to see if the parameters are correct.
 
