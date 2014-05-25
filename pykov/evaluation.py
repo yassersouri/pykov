@@ -19,7 +19,7 @@ def evaluate(observation, model, states=None, log=False):
         alphas = numpy.zeros((T,N))
         
         """ Initialization """
-        alphas[0, :] = numpy.log(model.pi) + numpy.log(model.B[:, observation[0]])
+        alphas[0, :] = numpy.log(model.pi) + B[:, observation[0]]
 
         """ Forward Updates """
         for t in range(1, T):
