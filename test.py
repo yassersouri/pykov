@@ -1,5 +1,5 @@
 import numpy
-from pykov import markov, evaluation, decoding
+from pykov import markov, evaluation, decoding, learning
 
 
 def main():
@@ -22,6 +22,8 @@ def main():
     print 'Eval', evaluation.evaluate(O, model)
     print 'Eval with state', evaluation.evaluate(O, model, Q)
     print 'Decode', decoding.viterbi(O, model)
+
+    pi, A, B = learning.baum_welch(O, 3, 2)
 
 
 if __name__ == '__main__':
