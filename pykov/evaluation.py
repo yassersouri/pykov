@@ -16,18 +16,7 @@ def evaluate(observations, model, states=None, log=False):
     B = numpy.log(model.B)
 
     if states is None:
-        alphas = numpy.zeros((T,N))
-        
-        """ Initialization """
-        alphas[0, :] = numpy.log(model.pi) + B[:, observations[0]]
-
-        """ Forward Updates """
-        for t in range(1, T):
-            for j in range(N):
-                temps = numpy.zeros(N)
-                for i in range(N):
-                    temps[i] = alphas[t-1, i] + A[i, j]
-                alphas[t, j] = add_logs(temps) + B[j, observations[t]]
+        alphas = forward_path(observations, numpy.log(model.pi), A, B, T, N)
 
         """ Termination """
         result = add_logs(alphas[T-1, :])
