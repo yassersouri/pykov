@@ -13,6 +13,11 @@ def baum_welch(observations, N, M):
 
     # initialize variables
     pi, A, B = initialize_variables(N, M, mode=INITIALIZATION_MODE)
+
+    # go to log-space
+    pi = numpy.log(pi)
+    A = numpy.log(A)
+    B = numpy.log(B)
     print 'initialization: Done'
 
     converge = False
@@ -34,7 +39,29 @@ def baum_welch(observations, N, M):
     return pi, A, B
 
 def EM_iterate(observations, N, M, T, pi, A, B):
-    
+    """ Expectation """
+    alphas = forward_path(observations, pi, A, B, T, N)
+    betas = backward_path(observations, pi, A, B, T, N)
+
+    gammas = calculate_gammas(alphas, betas, T, N)
+    kesies = calculate_ksies(observations, alphas, betas, A, B, T, N)
+
+    """ Maximization """
+    new_pi = gammas[0, :]
+
+    new_A = numpy.zeros((N, N))
+    for i in range(N):
+        norm_factor = add_logs(gammas[:-1, i])
+        for j in range(N):
+            new_A[i, j] = add_logs(kesies[:-1, i, j]) - norm_factor
+
+    new_B = numpy.zeros((N, M))
+    for i in range(N):
+        norm_factor = add_logs(gammas[:, i])
+        for k in range(M):
+            new_B[i, k] = add_logs(gammas[:, i][observations == k]) - norm_factor
+
+    return new_pi, new_A, new_B
 
 def did_converge(pi, A, B, new_pi, new_A, new_B):
     if numpy.linalg.norm(pi - new_pi) > CONV_CRIT:
@@ -72,3 +99,32 @@ def initialize_variables(N, M, mode="random"):
         raise Exception("invalid mode: %s" % mode)
 
     return pi, A, B
+
+def calculate_gammas(alphas, betas, T, N):
+    gammas = numpy.zeros((T, N))
+
+    for t in range(T):
+        for i in range(N):
+            gammas[t, i] = alphas[t, i] + betas[t, i]
+        sum_all = add_logs(gammas[t, :])
+        gammas[t, :] = gammas[t, :] - sum_all
+
+    return gammas
+
+def calculate_ksies(observations, alphas, betas, A, B, T, N):
+    ksies = numpy.zeros((T, N, N))
+
+    norms = numpy.zeros(T)
+
+    for t in range(T):
+        temps = numpy.zeros(N)
+        for k in range(N):
+            temps[k] = alphas[t, k] + betas[t, k]
+        norms[t] = add_logs(temps)
+
+    for t in range(T-1):
+        for i in range(N):
+            for j in range(N):
+                ksies[t, i, j] = alphas[t, i] + A[i, j] + betas[t+1, j] + B[j, observations[t+1]] - norms[t]
+
+    return ksies
