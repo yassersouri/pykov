@@ -17,6 +17,10 @@ All the computations are done in log-scale for more stability and robustness. Th
 
 The matrix `B`, the probability of each observation in each state is static and cannot change. For dynamic matrix `B` one can make small edits in the evaluation algorithm. But I suggest going for a `sum-product` algorithm in more complicated cases.
 
+###multinoulli observation model for learning with EM.
+
+In learning with EM (Baum-Welch) algorithm, The observation model that is currently implemented is the multinoulli, that is in each state the observations are discrete each is generated with a static parameter. 
+
 ##TODO
 
 * ~~Implement evaluation using Forward algorithm.~~
