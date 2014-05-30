@@ -1,4 +1,5 @@
 import numpy
+import markov, evaluation
 
 def add_logs(to_Add):
     """
@@ -44,3 +45,7 @@ def backward_path(observations, pi, A, B, T, N):
             betas[t, i] = add_logs(temps)
 
     return betas
+
+def calculate_likelihood(observations, pi, A, B):
+    model = markov.HMM(numpy.exp(pi), numpy.exp(A), numpy.exp(B))
+    return evaluation.evaluate(observations, model, log=True)

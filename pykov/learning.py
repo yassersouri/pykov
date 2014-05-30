@@ -2,7 +2,7 @@ import numpy
 from utils import * 
 
 INITIALIZATION_MODE = "random"
-MAX_ITERS = 10
+MAX_ITERS = 1000
 CONV_CRIT = 0.00001
 
 def baum_welch(observations, N, M):
@@ -14,6 +14,8 @@ def baum_welch(observations, N, M):
     # initialize variables
     pi, A, B = initialize_variables(N, M, mode=INITIALIZATION_MODE)
 
+    likelihoods = numpy.zeros(MAX_ITERS + 1)
+
     # go to log-space
     pi = numpy.log(pi)
     A = numpy.log(A)
@@ -24,6 +26,7 @@ def baum_welch(observations, N, M):
 
     iter_num = 0
     while not converge:
+        likelihoods[iter_num] = calculate_likelihood(observations, pi, A, B)
         iter_num += 1
 
         # iterate
@@ -35,8 +38,10 @@ def baum_welch(observations, N, M):
         if iter_num > MAX_ITERS:
             converge = True
 
+        #update values
+        pi, A, B = new_pi, new_A, new_B
     # return variables
-    return pi, A, B
+    return pi, A, B, likelihoods
 
 def EM_iterate(observations, N, M, T, pi, A, B):
     """ Expectation """

@@ -1,6 +1,6 @@
 import numpy
 from pykov import markov, evaluation, decoding, learning
-
+from matplotlib import pylab as plt
 
 def main():
     pi = numpy.array([1/3., 1/3., 1/3.])
@@ -23,7 +23,11 @@ def main():
     print 'Eval with state', evaluation.evaluate(O, model, Q)
     print 'Decode', decoding.viterbi(O, model)
 
-    pi, A, B = learning.baum_welch(O, 3, 2)
+    pi, A, B, likelihoods = learning.baum_welch(O, 3, 2)
+
+    plt.plot(likelihoods)
+    plt.show()
+
 
 
 if __name__ == '__main__':
