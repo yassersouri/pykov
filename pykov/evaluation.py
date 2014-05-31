@@ -1,6 +1,6 @@
 import numpy
 import math
-from utils import *
+from utils import add_logs, forward_path
 
 def evaluate(observations, model, states=None, log=False):
     """

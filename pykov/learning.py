@@ -1,5 +1,6 @@
 import numpy
-from utils import * 
+from utils import add_logs, forward_path, backward_path, params_to_vector
+import markov, evaluation
 
 INITIALIZATION_MODE = "random"
 MAX_ITERS = 1000
@@ -31,6 +32,8 @@ def baum_welch(observations, N, M):
 
         # iterate
         new_pi, new_A, new_B = EM_iterate(observations, N, M, T, pi, A, B)
+
+        print numpy.linalg.norm(params_to_vector(pi, A, B) - params_to_vector(new_pi, new_A, new_B))
         print 'EM Iteration: %d' % iter_num
 
         # check convergence
@@ -69,11 +72,11 @@ def EM_iterate(observations, N, M, T, pi, A, B):
     return new_pi, new_A, new_B
 
 def did_converge(pi, A, B, new_pi, new_A, new_B):
-    if numpy.linalg.norm(pi - new_pi) > CONV_CRIT:
-        return False
-    if numpy.linalg.norm(A - new_A) > CONV_CRIT:
-        return False
-    if numpy.linalg.norm(B - new_B) > CONV_CRIT:
+    old = params_to_vector(pi, A, B)
+    old = numpy.exp(old)
+    new = params_to_vector(new_pi, new_A, new_B)
+    new = numpy.exp(new)
+    if numpy.linalg.norm(old - new) > CONV_CRIT:
         return False
     return True
 
@@ -133,3 +136,8 @@ def calculate_ksies(observations, alphas, betas, A, B, T, N):
                 ksies[t, i, j] = alphas[t, i] + A[i, j] + betas[t+1, j] + B[j, observations[t+1]] - norms[t]
 
     return ksies
+
+
+def calculate_likelihood(observations, pi, A, B):
+    model = markov.HMM(numpy.exp(pi), numpy.exp(A), numpy.exp(B))
+    return evaluation.evaluate(observations, model, log=True)
