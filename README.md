@@ -26,7 +26,7 @@ In learning with EM (Baum-Welch) algorithm, The observation model that is curren
 * ~~Implement evaluation using Forward algorithm.~~
 * ~~Implement decoding using Viterbi algotithm.~~
 * ~~Implement the algorithms using the logarithm scale to make it possible to calculate very large or very small numbers.~~
-* Implement learning.
+* ~~Implement learning.~~
 * Test the implementations.
 * Covert to a python package.
 * Create some documentation.
