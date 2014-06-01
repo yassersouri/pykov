@@ -2,15 +2,13 @@ import numpy
 from utils import add_logs, forward_path, backward_path, params_to_vector
 import markov, evaluation
 
-INITIALIZATION_MODE = "random"
-MAX_ITERS = 1000
-CONV_CRIT = 0.00001
-
-def baum_welch(observations, N, M):
+def baum_welch(observations, N, M, max_iters=1000, conv_crit=0.00001, INITIALIZATION_MODE="random"):
     """
     N is the number of hidden states, M is the number of different possible observations
     """
     T = observations.shape[0]
+    MAX_ITERS = max_iters
+    CONV_CRIT = conv_crit
 
     # initialize variables
     pi, A, B = initialize_variables(N, M, mode=INITIALIZATION_MODE)
@@ -35,7 +33,7 @@ def baum_welch(observations, N, M):
         print 'EM Iteration: %d' % iter_num
 
         # check convergence
-        converge = did_converge(pi, A, B, new_pi, new_A, new_B)
+        converge = did_converge(pi, A, B, new_pi, new_A, new_B, CONV_CRIT)
         if iter_num > MAX_ITERS:
             converge = True
 
@@ -69,7 +67,7 @@ def EM_iterate(observations, N, M, T, pi, A, B):
 
     return new_pi, new_A, new_B
 
-def did_converge(pi, A, B, new_pi, new_A, new_B):
+def did_converge(pi, A, B, new_pi, new_A, new_B, CONV_CRIT):
     old = params_to_vector(pi, A, B)
     old = numpy.exp(old)
     new = params_to_vector(new_pi, new_A, new_B)
