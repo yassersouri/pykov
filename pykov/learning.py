@@ -15,7 +15,7 @@ def baum_welch(observations, N, M):
     # initialize variables
     pi, A, B = initialize_variables(N, M, mode=INITIALIZATION_MODE)
 
-    likelihoods = numpy.zeros(MAX_ITERS + 1)
+    likelihoods = []
 
     # go to log-space
     pi = numpy.log(pi)
@@ -27,13 +27,11 @@ def baum_welch(observations, N, M):
 
     iter_num = 0
     while not converge:
-        likelihoods[iter_num] = calculate_likelihood(observations, pi, A, B)
+        likelihoods.append(calculate_likelihood(observations, pi, A, B))
         iter_num += 1
 
         # iterate
         new_pi, new_A, new_B = EM_iterate(observations, N, M, T, pi, A, B)
-
-        print numpy.linalg.norm(params_to_vector(pi, A, B) - params_to_vector(new_pi, new_A, new_B))
         print 'EM Iteration: %d' % iter_num
 
         # check convergence
@@ -76,7 +74,9 @@ def did_converge(pi, A, B, new_pi, new_A, new_B):
     old = numpy.exp(old)
     new = params_to_vector(new_pi, new_A, new_B)
     new = numpy.exp(new)
-    if numpy.linalg.norm(old - new) > CONV_CRIT:
+    diff = numpy.linalg.norm(old - new)
+    print diff
+    if diff > CONV_CRIT:
         return False
     return True
 
