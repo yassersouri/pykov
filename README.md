@@ -1,4 +1,4 @@
-#pykov - python implementation of inference and learning in HMM [Under development]
+#pykov - python implementation of inference and learning in HMM
 
 Here I try to implement inference (evaluation and decoding) and learning  algorithms in python for Hidden Markov Models. These algorithms are fairly easy dynamic programming ones.
 
